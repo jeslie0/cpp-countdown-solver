@@ -8,8 +8,7 @@
 
 Expr::Expr(int val)
     : _val(val)
-    , _op(std::nullopt)
-{};
+    , _op(std::nullopt) {};
 
 Expr::Expr(std::shared_ptr<Expr> left, Op operation, std::shared_ptr<Expr> right)
     : _val(set_val(*left, operation, *right))
@@ -39,8 +38,7 @@ auto Expr::to_string() const -> std::string
         default:
             return "";
         }
-    }
-    else
+    } else
     {
         return std::to_string(_val);
     }
