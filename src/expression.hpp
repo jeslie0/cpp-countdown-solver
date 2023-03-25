@@ -34,7 +34,4 @@ private:
 
 auto operator<<(std::ostream& out, const Expr& expr) -> std::ostream&;
 
-auto valid(int l, Op op, int r) -> bool;
-
-auto combine(Expr &l, Expr &r) -> std::vector<Expr>;
-
+auto valid(int left_num, Op operation, int right_num) -> bool;

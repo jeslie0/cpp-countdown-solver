@@ -14,5 +14,5 @@ private:
 
     std::vector<Expr> _solutions = {};
     auto exprs(const std::vector<int> &vec) -> std::vector<Expr>;
-    auto combine(Expr &left_expr, Expr &right_expr) -> std::vector<Expr>;
+    auto combine(const Expr &left_expr, const Expr &right_expr) -> std::vector<Expr>;
 };
