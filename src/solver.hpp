@@ -13,6 +13,6 @@ private:
     const int _target;
 
     std::vector<Expr> _solutions = {};
-    auto exprs(const std::vector<int> &vec) -> std::vector<Expr>;
-    auto combine(const Expr &left_expr, const Expr &right_expr) -> std::vector<Expr>;
+    auto generate_expressions(const std::vector<int> &vec) -> std::vector<Expr>;
+    inline auto combine(const Expr &left_expr, const Expr &right_expr) -> std::vector<Expr>;
 };

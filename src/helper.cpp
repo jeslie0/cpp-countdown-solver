@@ -1,3 +1,5 @@
+#include "helper.hpp"
+
 auto factorial(unsigned int n) -> unsigned int
 {
     unsigned int result = 1;

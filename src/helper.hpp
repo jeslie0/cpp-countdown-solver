@@ -5,15 +5,6 @@
 auto factorial(unsigned int n) -> unsigned int;
 
 template<typename T>
-auto choices(std::vector<T> vec) -> std::vector<std::vector<T>>{
-    std::vector<std::vector<T>> permutations(factorial(vec.size()));
-
-    for (int i = 0; i < factorial(vec.size()); i++) {
-        permutations.push_back(std::next_permutation(vec));
-    }
-    return permutations;
-}
-template<typename T>
 auto split_at(int n, const std::vector<T>& vec) -> std::pair<std::vector<T>, std::vector<T>>{
     std::vector<T> fst(vec.begin(), vec.begin() + n);
     std::vector<T> snd(vec.begin() + n, vec.end());
@@ -28,7 +19,7 @@ auto split(const std::vector<T>& vec) -> std::vector<std::pair<std::vector<T>, s
     }
     std::vector<std::pair<std::vector<T>, std::vector<T>>> result;
     for (int indx = 1; indx < vec.size(); indx++) {
-        result.push_back(split_at<T>(indx,vec));
+        result.emplace_back(split_at<T>(indx,vec));
     }
     return result;
 }
@@ -36,10 +27,30 @@ auto split(const std::vector<T>& vec) -> std::vector<std::pair<std::vector<T>, s
 template<typename T>
 auto flatten(const std::vector<std::vector<T>>& vec) -> std::vector<T> {
     std::vector<T> result;
-    for (auto subvec : vec) {
-        for (auto elem : subvec) {
-            result.push_back(elem);
+    for (const std::vector<T>& subvec : vec) {
+        for (const T& elem : subvec) {
+            result.emplace_back(elem);
         }
     }
     return result;
+}
+
+template<typename T>
+auto subVectors(std::vector<T> v) -> std::vector<std::vector<T>>
+{
+    std::vector<std::vector<T>> res;
+    T n = v.size();
+    for (T i = 0; i < n; i++)
+    {
+        for (T j = i; j < n; j++)
+        {
+            std::vector<T> subv;
+            for (T k = i; k <= j; k++)
+            {
+                subv.push_back(v[k]);
+            }
+            res.push_back(subv);
+        }
+    }
+    return res;
 }

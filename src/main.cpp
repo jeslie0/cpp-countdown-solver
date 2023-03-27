@@ -5,7 +5,7 @@
 
 auto main() -> int
 {
-    std::vector<int> nums { 10, 25, 50, 75, 100, 4, 4};
+    std::vector<int> nums { 10, 25, 50, 75, 100, 4, 4 };
     Solver solutions = Solver(nums, 563);
 
     std::vector<Expr> test = solutions.generate_solutions();

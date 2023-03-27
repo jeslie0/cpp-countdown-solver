@@ -5,13 +5,13 @@
 #include <iostream>
 #include <memory>
 
-Solver::Solver(const std::vector<int> &numbers, const int target)
+Solver::Solver(const std::vector<int>& numbers, const int target)
     : _numbers(numbers)
     , _target(target)
 {
 }
 
-auto Solver::exprs(const std::vector<int> &num_vec) -> std::vector<Expr>
+auto Solver::generate_expressions(const std::vector<int>& num_vec) -> std::vector<Expr>
 {
     switch (num_vec.size())
     {
@@ -21,17 +21,18 @@ auto Solver::exprs(const std::vector<int> &num_vec) -> std::vector<Expr>
         return { Expr(num_vec[0]) };
     default:
         std::vector<std::vector<Expr>> result;
-        for (const auto &pair : split<int>(num_vec))
+        // for (const auto& pair : split<int>(num_vec))
+        for (int indx = 1; indx < num_vec.size(); indx++)
         {
-            std::vector<int> left_nums = pair.first;
-            std::vector<int> right_nums = pair.second;
-            std::vector<Expr> left_exprs = exprs(left_nums);
-            std::vector<Expr> right_exprs = exprs(right_nums);
+            const std::vector<int> left_nums(num_vec.begin(), num_vec.begin() + indx);
+            const std::vector<int> right_nums(num_vec.begin() + indx, num_vec.end());
+            const std::vector<Expr> left_exprs = generate_expressions(left_nums);
+            const std::vector<Expr> right_exprs = generate_expressions(right_nums);
             for (const Expr& left_expr : left_exprs)
             {
                 for (const Expr& right_expr : right_exprs)
                 {
-                    result.emplace_back(combine(left_expr, right_expr));
+                    result.push_back(combine(left_expr, right_expr));
                 }
             }
         }
@@ -39,7 +40,7 @@ auto Solver::exprs(const std::vector<int> &num_vec) -> std::vector<Expr>
     }
 }
 
-auto Solver::combine(const Expr &left_expr, const Expr &right_expr) -> std::vector<Expr>
+inline auto Solver::combine(const Expr& left_expr, const Expr& right_expr) -> std::vector<Expr>
 {
     std::vector<Expr> exprs {};
     std::shared_ptr<Expr> left_ptr = std::make_shared<Expr>(left_expr);
@@ -62,14 +63,6 @@ auto Solver::combine(const Expr &left_expr, const Expr &right_expr) -> std::vect
         exprs.emplace_back(Expr(left_ptr, Op::Div, right_ptr));
     }
 
-    for (const Expr &expr : exprs)
-    {
-        if (expr.eval() == _target)
-        {
-            _solutions.push_back(expr);
-        }
-    }
-
     return exprs;
 }
 
@@ -84,10 +77,19 @@ auto Solver::generate_solutions() -> std::vector<Expr>
     }
 
     std::vector<int> new_numbers = _numbers;
-    for (int num = 0; num < factorial(_numbers.size()); num++)
+    for (auto& subvec : subVectors(new_numbers))
     {
-        exprs(new_numbers);
-        std::next_permutation(new_numbers.begin(), new_numbers.end());
+        for (int num = 0; num < factorial(subvec.size()); num++)
+        {
+            for (const Expr& exp : generate_expressions(subvec))
+            {
+                if (exp.eval() == _target)
+                {
+                    _solutions.emplace_back(exp);
+                }
+            }
+            std::next_permutation(subvec.begin(), subvec.end());
+        }
     }
 
     return _solutions;

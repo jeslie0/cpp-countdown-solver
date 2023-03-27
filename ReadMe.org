@@ -1,1 +1,3 @@
 #+title: Countdown Solver
+* Outline
+The Countdown Problem is the following: you are given 6 natural numbers, comprised of up to four high numbers (25, 50, 75, 100) and up to 6 low numbers (1,2,..,9), and a three digit target number. Using each of the 6 digits at most once, construct a valid expression using the four basic arithmetic operations which is equal to the target number. The rules are that every sub-expression must be a natural number: no negative numbers or fractions allowed.
