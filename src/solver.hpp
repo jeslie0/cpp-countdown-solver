@@ -14,5 +14,5 @@ private:
 
     std::vector<Expr> _solutions = {};
     auto generate_expressions(const std::vector<int> &vec) -> std::vector<Expr>;
-    inline auto combine(const Expr &left_expr, const Expr &right_expr) -> std::vector<Expr>;
+    auto combine(const Expr &left_expr, const Expr &right_expr) -> std::vector<Expr>;
 };

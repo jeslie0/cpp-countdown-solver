@@ -35,19 +35,22 @@ auto flatten(const std::vector<std::vector<T>>& vec) -> std::vector<T> {
     return result;
 }
 
+// Made by ChatGPT - generates the 2^n subsequences from an input
+// vector.
+// TODO: Check that this does actually work
 template<typename T>
-auto subVectors(std::vector<T> v) -> std::vector<std::vector<T>>
+auto sub_sequences(std::vector<T> vec) -> std::vector<std::vector<T>>
 {
     std::vector<std::vector<T>> res;
-    T n = v.size();
-    for (T i = 0; i < n; i++)
+    int vec_size = vec.size();
+    for (int i = 0; i < vec_size; i++)
     {
-        for (T j = i; j < n; j++)
+        for (int j = i; j < vec_size; j++)
         {
             std::vector<T> subv;
-            for (T k = i; k <= j; k++)
+            for (int k = i; k <= j; k++)
             {
-                subv.push_back(v[k]);
+                subv.push_back(vec[k]);
             }
             res.push_back(subv);
         }

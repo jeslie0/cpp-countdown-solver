@@ -1,3 +1,6 @@
 #+title: Countdown Solver
 * Outline
 The Countdown Problem is the following: you are given 6 natural numbers, comprised of up to four high numbers (25, 50, 75, 100) and up to 6 low numbers (1,2,..,9), and a three digit target number. Using each of the 6 digits at most once, construct a valid expression using the four basic arithmetic operations which is equal to the target number. The rules are that every sub-expression must be a natural number: no negative numbers or fractions allowed.
+
+Our solution to this problem is based loosely on the paper [[https://www.cs.nott.ac.uk/~pszgmh/countdown.pdf][The Countdown Problem]], by Graham Hutton. We t a brute force approach and define a class to represent a binary expression, then recursively form each possible binary expression from the given input. This generates expressions whose leaves are our original vector of numbers, in the same order. In order to get every expression, we also apply this to every subsequence of the input vector, and also every permutation of each vector considered. This allows us to guarantee we have built every valid expression possible. The results are only added to the =_solutions= vector if they evaluate to the desired target.
+

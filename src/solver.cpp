@@ -11,6 +11,8 @@ Solver::Solver(const std::vector<int>& numbers, const int target)
 {
 }
 
+// Generate and return the possible expressions formed from the input
+// vector. These are formed "in order".
 auto Solver::generate_expressions(const std::vector<int>& num_vec) -> std::vector<Expr>
 {
     switch (num_vec.size())
@@ -21,7 +23,6 @@ auto Solver::generate_expressions(const std::vector<int>& num_vec) -> std::vecto
         return { Expr(num_vec[0]) };
     default:
         std::vector<std::vector<Expr>> result;
-        // for (const auto& pair : split<int>(num_vec))
         for (int indx = 1; indx < num_vec.size(); indx++)
         {
             const std::vector<int> left_nums(num_vec.begin(), num_vec.begin() + indx);
@@ -40,7 +41,8 @@ auto Solver::generate_expressions(const std::vector<int>& num_vec) -> std::vecto
     }
 }
 
-inline auto Solver::combine(const Expr& left_expr, const Expr& right_expr) -> std::vector<Expr>
+// Combine two expressions in valid ways.
+auto Solver::combine(const Expr& left_expr, const Expr& right_expr) -> std::vector<Expr>
 {
     std::vector<Expr> exprs {};
     std::shared_ptr<Expr> left_ptr = std::make_shared<Expr>(left_expr);
@@ -66,8 +68,11 @@ inline auto Solver::combine(const Expr& left_expr, const Expr& right_expr) -> st
     return exprs;
 }
 
+// Generate all solutions.
 auto Solver::generate_solutions() -> std::vector<Expr>
 {
+    // If any of the input numbers is a solution, add it to
+    // _solutions.
     for (int num : _numbers)
     {
         if (num == _target)
@@ -76,8 +81,10 @@ auto Solver::generate_solutions() -> std::vector<Expr>
         }
     }
 
+    // Generate expressions from the permutations of every subsequence
+    // of the input vector.
     std::vector<int> new_numbers = _numbers;
-    for (auto& subvec : subVectors(new_numbers))
+    for (auto& subvec : sub_sequences(new_numbers))
     {
         for (int num = 0; num < factorial(subvec.size()); num++)
         {
