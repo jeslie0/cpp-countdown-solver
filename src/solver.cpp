@@ -75,7 +75,7 @@ auto Solver::generate_solutions() -> std::vector<std::shared_ptr<Expr>>
     {
         if (num == _target)
         {
-                    _solutions.emplace_back(std::make_shared<Expr>(Expr(num)));
+            _solutions.emplace_back(std::make_shared<Expr>(Expr(num)));
         }
     }
 

@@ -54,7 +54,7 @@ auto Expr::set_val(const Expr &left, Op operation, const Expr &right) const -> i
         return left._val - right._val;
     case Op::Mul:
         return left._val * right._val;
-    case Op::Div:
+    default: // Division
         return left._val / right._val;
     }
 }
@@ -69,7 +69,7 @@ auto valid(int left_num, Op operation, int right_num) -> bool
         return left_num > right_num;
     case Op::Mul:
         return left_num <= right_num && left_num != 1 && left_num != 0 && right_num != 1 && right_num != 0;
-    case Op::Div:
+    default: // Division
         return left_num % right_num == 0 && right_num != 1;
     }
 }
